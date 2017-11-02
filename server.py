@@ -20,7 +20,7 @@ def isCorrectFormat(data):
 #"string of this : boardformat = 000|000|000\n"
 
 HOST = '127.0.0.1'      # Symbolic name meaning the local host
-PORT = 50007            # Arbitrary non-privileged port
+PORT = 707            # Arbitrary non-privileged port
 INVALID_FORMAT = 'This is an invalid format' # we won't response in the future if the format is wrong
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
