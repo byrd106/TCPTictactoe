@@ -15,7 +15,7 @@ def isCorrectFormat(data):
 
 
 
-HOST = sys.argv[1]      # Symbolic name meaning the local host
+HOST = "0.0.0.0"      # Symbolic name meaning the local host
 PORT = 707            # Arbitrary non-privileged port
 INVALID_FORMAT = 'This is an invalid format' # we won't response in the future if the format is wrong
 
