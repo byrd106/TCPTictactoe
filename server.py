@@ -3,21 +3,15 @@ import sys
 from test import *
 from time import sleep 
 
+
 SERVER_TEAM = "O"
 
-
 def isCorrectFormat(data):
-	
-	#print len(data) == 11
-	#print data[3] == "|"
-	#print data[7] == "|"
-	#len(data) == 11 and 
+
 	if data[3] == "|" and data[7] == "|":
 		return True
 	else:
 		return False
-
-#"string of this : boardformat = 000|000|000\n"
 
 HOST = '127.0.0.1'      # Symbolic name meaning the local host
 PORT = 707            # Arbitrary non-privileged port
@@ -45,19 +39,31 @@ while True:
             if data:              
                if '\n' in data:
                	transmittedData = transmittedData + data
-               	print "move from client",transmittedData
+               	print "CLIENT SAYS"
+                if tieMessage() in transmittedData:
+                  print "I(SERVER,"+SERVER_TEAM+") SAY",tieMessage()
+                  connection.sendall(tieMessage())
+                  break
+                if serverWin() in transmittedData:       
+                  print "I(SERVER,"+SERVER_TEAM+") SAY",serverWin()
+                  connection.sendall(serverWin())
+                  break
+
+                printb(transmittedData)
                	if isCorrectFormat(transmittedData):
-               		try:
-               			response = makeMove(transmittedData,determineMove,SERVER_TEAM)               		
-               		except:
-               			print "Sending TIE to client"
-               			connection.sendall("tie\n")
-               			break           
-    		            
-               		print "Here is my move",response
-               		sleep(1)
-               		connection.sendall(response)
-               		transmittedData = ""
+               	  try:
+                    response = makeMove(transmittedData,basicMove,SERVER_TEAM)              
+               	  except ValueError as VE:
+                    print "I(SERVER,"+SERVER_TEAM+") SAY"
+                    print str(VE)
+                    connection.sendall(str(VE))
+                    break            
+                                 
+                  print "I(SERVER,"+SERVER_TEAM+") SAY"
+                  printb(response)
+                  connection.sendall(response)
+                  transmittedData = ""
+
                	else:
                		connection.sendall(INVALID_FORMAT)   
               	 	break
